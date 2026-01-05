@@ -50,7 +50,7 @@ export const FlashCard = ({ question, isFlipped, onFlip }: FlashCardProps) => {
         
         {/* Back of card - Tips */}
         <div className="absolute inset-0 backface-hidden card-back">
-          <div className="h-full bg-primary rounded-2xl shadow-card-hover p-8 flex flex-col">
+          <div className="h-full bg-primary text-primary-foreground rounded-2xl shadow-card-hover p-8 flex flex-col">
             <div className="flex items-center justify-between mb-4">
               <span className="px-3 py-1 rounded-full text-sm font-medium bg-primary-foreground/20 text-primary-foreground flex items-center gap-2">
                 <Lightbulb className="w-4 h-4" />
@@ -59,8 +59,8 @@ export const FlashCard = ({ question, isFlipped, onFlip }: FlashCardProps) => {
             </div>
             
             <div className="flex-1 flex items-center justify-center px-2">
-              <p className="text-lg md:text-xl text-center leading-relaxed text-primary-foreground">
-                {question.tip}
+              <p className="text-lg md:text-xl text-center leading-relaxed whitespace-pre-wrap">
+                {question.tip || "Tip coming soon."}
               </p>
             </div>
             
