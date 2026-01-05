@@ -21,7 +21,10 @@ export const FlashCard = ({ question, isFlipped, onFlip }: FlashCardProps) => {
         )}
       >
         {/* Front of card - Question */}
-        <div className="absolute inset-0 backface-hidden card-front">
+        <div className={cn(
+          "absolute inset-0 backface-hidden card-front transition-opacity duration-200",
+          isFlipped ? "opacity-0 pointer-events-none" : "opacity-100"
+        )}>
           <div className="h-full bg-card rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-300 p-8 flex flex-col border border-border/50">
             <div className="flex items-center justify-between mb-6">
               <span className={cn(
@@ -49,7 +52,10 @@ export const FlashCard = ({ question, isFlipped, onFlip }: FlashCardProps) => {
         </div>
         
         {/* Back of card - Tips */}
-        <div className="absolute inset-0 backface-hidden card-back">
+        <div className={cn(
+          "absolute inset-0 backface-hidden card-back transition-opacity duration-200",
+          isFlipped ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}>
           <div className="h-full bg-primary text-primary-foreground rounded-2xl shadow-card-hover p-8 flex flex-col">
             <div className="flex items-center justify-between mb-4">
               <span className="px-3 py-1 rounded-full text-sm font-medium bg-primary-foreground/20 text-primary-foreground flex items-center gap-2">
