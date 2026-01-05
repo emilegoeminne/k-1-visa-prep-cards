@@ -23,6 +23,7 @@ const Index = () => {
   const [learnedIds, setLearnedIds] = useState<Set<number>>(new Set());
 
   const currentCard = cards[currentIndex];
+  const canGoNext = currentIndex < cards.length - 1;
 
   const handleFlip = useCallback(() => {
     setIsFlipped((prev) => !prev);
@@ -36,11 +37,11 @@ const Index = () => {
   }, [currentIndex]);
 
   const handleNext = useCallback(() => {
-    if (currentIndex < cards.length - 1) {
+    if (canGoNext) {
       setCurrentIndex((prev) => prev + 1);
       setIsFlipped(false);
     }
-  }, [currentIndex, cards.length]);
+  }, [canGoNext]);
 
   const handleShuffle = useCallback(() => {
     setCards(shuffleArray(questions));
@@ -50,18 +51,33 @@ const Index = () => {
   }, []);
 
   const handleMarkLearned = useCallback(() => {
+    const wasLearned = learnedIds.has(currentCard.id);
+    
     setLearnedIds((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(currentCard.id)) {
         newSet.delete(currentCard.id);
-        toast("Card unmarked");
       } else {
         newSet.add(currentCard.id);
-        toast.success("Great job! Card marked as mastered");
       }
       return newSet;
     });
-  }, [currentCard.id]);
+
+    if (!wasLearned) {
+      toast.success("Great job! Card marked as mastered");
+      // Auto-advance to next card after marking as learned
+      if (canGoNext) {
+        setTimeout(() => {
+          setCurrentIndex((prev) => prev + 1);
+          setIsFlipped(false);
+        }, 300);
+      } else {
+        toast("You've reached the last card! 🎉");
+      }
+    } else {
+      toast("Card unmarked");
+    }
+  }, [currentCard.id, canGoNext, learnedIds]);
 
   const handleReset = useCallback(() => {
     setCards(questions);
@@ -99,7 +115,7 @@ const Index = () => {
           </h1>
         </div>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Practice your interview questions with confidence. Flip cards to practice your answers.
+          Practice your interview questions with confidence. Flip cards to see helpful tips.
         </p>
       </header>
 
@@ -130,7 +146,7 @@ const Index = () => {
             onReset={handleReset}
             isLearned={learnedIds.has(currentCard.id)}
             canGoPrevious={currentIndex > 0}
-            canGoNext={currentIndex < cards.length - 1}
+            canGoNext={canGoNext}
           />
         </div>
       </main>
