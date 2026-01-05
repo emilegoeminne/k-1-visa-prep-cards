@@ -1,6 +1,6 @@
 import { Question, categoryLabels, categoryColors } from "@/data/questions";
 import { cn } from "@/lib/utils";
-import { RotateCcw } from "lucide-react";
+import { Lightbulb, RotateCcw } from "lucide-react";
 
 interface FlashCardProps {
   question: Question;
@@ -20,7 +20,7 @@ export const FlashCard = ({ question, isFlipped, onFlip }: FlashCardProps) => {
           isFlipped && "flipped"
         )}
       >
-        {/* Front of card */}
+        {/* Front of card - Question */}
         <div className="absolute inset-0 backface-hidden">
           <div className="h-full bg-card rounded-2xl shadow-card hover:shadow-card-hover transition-shadow duration-300 p-8 flex flex-col border border-border/50">
             <div className="flex items-center justify-between mb-6">
@@ -42,24 +42,25 @@ export const FlashCard = ({ question, isFlipped, onFlip }: FlashCardProps) => {
             </div>
             
             <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm mt-4">
-              <RotateCcw className="w-4 h-4" />
-              <span>Click to flip</span>
+              <Lightbulb className="w-4 h-4" />
+              <span>Click for answer tips</span>
             </div>
           </div>
         </div>
         
-        {/* Back of card */}
+        {/* Back of card - Tips */}
         <div className="absolute inset-0 backface-hidden rotate-y-180">
           <div className="h-full bg-primary rounded-2xl shadow-card-hover p-8 flex flex-col">
-            <div className="flex items-center justify-between mb-6">
-              <span className="px-3 py-1 rounded-full text-sm font-medium bg-primary-foreground/20 text-primary-foreground">
-                Your Answer
+            <div className="flex items-center justify-between mb-4">
+              <span className="px-3 py-1 rounded-full text-sm font-medium bg-primary-foreground/20 text-primary-foreground flex items-center gap-2">
+                <Lightbulb className="w-4 h-4" />
+                Answer Tip
               </span>
             </div>
             
-            <div className="flex-1 flex items-center justify-center">
-              <p className="text-xl md:text-2xl font-display text-center leading-relaxed text-primary-foreground opacity-90">
-                Practice your answer out loud. Speak clearly and confidently!
+            <div className="flex-1 flex items-center justify-center px-2">
+              <p className="text-lg md:text-xl text-center leading-relaxed text-primary-foreground">
+                {question.tip}
               </p>
             </div>
             
