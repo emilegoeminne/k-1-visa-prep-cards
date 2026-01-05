@@ -1,0 +1,22 @@
+<!--
+GitHub Pages SPA fallback.
+
+For this project we use HashRouter, so routes are under /#/.
+GitHub Pages serves this 404.html for unknown paths; we redirect to the app root.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting…</title>
+    <script>
+      // Redirect to root while preserving the hash if any.
+      // Works for GitHub Pages when a deep link is refreshed.
+      const base = location.pathname.split('/').slice(0, 2).join('/') + '/';
+      location.replace(base + '#/');
+    </script>
+  </head>
+  <body></body>
+</html>
